@@ -141,7 +141,7 @@ class UserExt extends AdminModel
 
 
     //
-    public static function confirmEmail($token): array|true
+    public static function confirmEmail($token): array|bool
     {
         $userExt = self::getByConfirmToken($token);
 
@@ -166,7 +166,7 @@ class UserExt extends AdminModel
 
 
     //
-    public static function updateEmail($user_id = null, $email = null): true|array|null
+    public static function updateEmail($user_id = null, $email = null): bool|array|null
     {
         if (!$user_id || !$email) {
             return null;
