@@ -1,4 +1,7 @@
 <?php
+
+use yii\web\JsExpression;
+
 return [
     'adminEmail' => 'admin@example.com',
     'supportEmail' => 'support@example.com',
@@ -50,6 +53,50 @@ return [
             2 => ['name' => 'game-save', 'description' => 'Сохранение игры' ],
         ],
 
+    ],
+
+    'editorjs-widget/plugins' => [
+        'header' => [
+            'repository' => 'editorjs/header',
+            'class' => new JsExpression('Header'),
+            'inlineToolbar' => true,
+            'config' => ['placeholder' => 'Header', 'levels' => [2, 3, 4, 5]],
+            'shortcut' => 'CMD+SHIFT+H'
+        ],
+        'paragraph' => [
+            'repository' => 'editorjs/paragraph',
+            'class' => new JsExpression('Paragraph'),
+            'inlineToolbar' => true,
+        ],
+        'image' => [
+            'repository' => 'editorjs/image',
+            'class' => new JsExpression('ImageTool'),
+            'config' => [
+                'field' => 'image',
+                'additionalRequestHeaders' => [],
+                'endpoints' => [
+                ]
+            ]
+        ],
+        'list' => [
+            'repository' => 'editorjs/list',
+            'class' => new JsExpression('List'),
+            'inlineToolbar' => true,
+            'shortcut' => 'CMD+SHIFT+L'
+        ],
+        'table' => [
+            'repository' => 'editorjs/table',
+            'class' => new JsExpression('Table'),
+            'inlineToolbar' => true,
+            'shortcut' => 'CMD+ALT+T'
+        ],
+        'quote' => [
+            'repository' => 'editorjs/quote',
+            'class' => new JsExpression('Quote'),
+            'inlineToolbar' => true,
+            'config' => ['quotePlaceholder' => 'Quote', 'captionPlaceholder' => 'Author'],
+            'shortcut' => 'CMD+SHIFT+O'
+        ],
     ],
 
     // >>> Kartik config >>>

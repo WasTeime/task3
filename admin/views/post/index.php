@@ -32,10 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'description:ntext',
-            'content:ntext',
+            ['attribute' => 'content', 'value' => fn (Post $post) => $post->htmlContent],
             'author_id',
-            //'created_at',
-            //'updated_at',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Post $model, $key, $index, $column) {

@@ -13,20 +13,21 @@ class m240416_145936_create_post_table extends Migration
     public function safeUp()
     {
         $this->createTable('{{%post}}', [
-            'id' => $this->primaryKey(),
+            'user_id' => $this->primaryKey(),
             'title' => $this->string(255)->notNull(),
-            'description' => $this->text()->null(),
-            'content' => $this->text()->notNull(),
-            'author_id' => $this->integer()->notNull(),
-            'created_at' => $this->integer(11)->notNull(),
-            'updated_at' => $this->integer(11)->notNull(),
+            'text' => $this->text()->notNull(),
+            'post_category_id' => $this->integer()->null(),
+            'status' => $this->integer()->notNull(),
+            'image' => $this->text()->null(),
+            'created_at' => $this->integer()->notNull(),
+            'updated_at' => $this->integer()->notNull(),
         ]);
 
         $this->addForeignKey(
-            'fk-post-author_id',
+            'fk-post-category_id',
                 'post',
-            'author_id',
-            'user',
+            'post_category_id',
+            'post_category',
             'id',
             'CASCADE',
         );
@@ -37,7 +38,7 @@ class m240416_145936_create_post_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropForeignKey('fk-post-author_id', 'post');
+        $this->dropForeignKey('fk-post-category_id', 'post');
 
         $this->dropTable('{{%post}}');
     }
