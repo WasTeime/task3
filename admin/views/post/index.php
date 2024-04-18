@@ -26,14 +26,17 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'options' => ['class' => 'text-wrap'],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'title',
-            'description:ntext',
-            ['attribute' => 'content', 'value' => fn (Post $post) => $post->htmlContent],
-            'author_id',
+            ['attribute' => 'post_category_id', 'value' => fn (Post $post) => $post->getPostCategory()->one() != null ? $post->getPostCategory()->one()->name : 'Без категории'],
+//            ['attribute' => 'text', 'value' => fn (Post $post) => $post->htmlContent],
+            ['attribute' => 'status', 'value' => fn ($post) => $post->getStatus()[$post->status]],
+            'created_at:datetime',
+            'updated_at:datetime',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Post $model, $key, $index, $column) {

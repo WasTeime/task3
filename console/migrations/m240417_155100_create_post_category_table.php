@@ -3,7 +3,7 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `{{%post_category}}`.
+ * Handles the creation of table `{{%post-category}}`.
  */
 class m240417_155100_create_post_category_table extends Migration
 {
@@ -12,7 +12,7 @@ class m240417_155100_create_post_category_table extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('{{%post_category}}', [
+        $this->createTable('{{%post-category}}', [
             'id' => $this->primaryKey(),
             'name' => $this->string(255)->notNull()->unique(),
         ]);
@@ -23,6 +23,6 @@ class m240417_155100_create_post_category_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('{{%post_category}}');
+        $this->dropTable('{{%post-category}}');
     }
 }

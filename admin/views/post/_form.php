@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use zakurdaev\editorjs\EditorJsWidget;
+use admin\components\PostStatus;
+use common\models\PostCategory;
 
 /** @var yii\web\View $this */
 /** @var common\models\Post $model */
@@ -10,16 +12,28 @@ use zakurdaev\editorjs\EditorJsWidget;
 ?>
 
 <div class="post-form">
-
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'author_id')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 6])?>
+    <?php
+        $data = [];
+        foreach (PostCategory::find()->all() as $item) {
+            $data[$item->id] = $item->name;
+        }
+        echo $form->field($model, 'post_category_id')->dropDownList($data, ['prompt' => 'Выберите категорию']);
+    ?>
 
-    <?= $form->field($model, 'content')->widget(EditorJsWidget::class, [
+    <?php
+        $status = new PostStatus();
+        echo $form->field($model, 'status')->dropDownList($status->getStatuses(true));
+    ?>
+
+    <?= $form->field($model, 'text')->widget(EditorJsWidget::class, [
         'selectorForm' => $form->id,
+        'endpoints' => [
+                'uploadImageByFile' => \yii\helpers\Url::to(Yii::getAlias('@admin').'/post/upload-file')
+        ]
     ]) ?>
 
     <div class="form-group mt-4">

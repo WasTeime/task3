@@ -4,8 +4,10 @@ namespace admin\controllers;
 
 use common\models\Post;
 use common\models\PostSearch;
+use admin\controllers\AdminController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use zakurdaev\editorjs\actions\UploadImageAction;
 
 /**
  * PostController implements the CRUD actions for Post model.
@@ -28,6 +30,17 @@ class PostController extends AdminController
                 ],
             ]
         );
+    }
+
+    public function actions()
+    {
+        return [
+            'upload-file' => [
+                'class' => UploadImageAction::class,
+                'mode' => UploadImageAction::MODE_FILE,
+                'path' => \Yii::getAlias('@uploads'),
+            ]
+        ];
     }
 
     /**
@@ -69,6 +82,9 @@ class PostController extends AdminController
         $model = new Post();
 
         if ($this->request->isPost) {
+            if ($model->save()) {
+                print_r('save');
+            }
             if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }

@@ -54,6 +54,7 @@ FontAwesomeAsset::register($this);
                 'label' => 'Контент',
                 'items' => [
                     ['label' => 'Посты', 'url' => ['/post']],
+                    ['label' => 'Категории постов', 'url' => ['/post-category']]
                 ]
             ],
             [
