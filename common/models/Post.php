@@ -56,7 +56,7 @@ class Post extends \yii\db\ActiveRecord
             [['title', 'text'], 'required'],
             [['text'], 'string'],
             [['title'], 'string', 'max' => 255],
-            [['image'], 'file', 'extensions' => 'png, jpg'],
+            [['imageFile'], 'file', 'extensions' => 'png, jpg'],
             [['post_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => PostCategory::class, 'targetAttribute' => ['post_category_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -82,7 +82,9 @@ class Post extends \yii\db\ActiveRecord
 
     public function beforeValidate(): bool
     {
-        $this->imageFile = UploadedFile::getInstance($this, 'image');
+        if (Yii::$app->id === 'app-admin') {
+            $this->imageFile = UploadedFile::getInstance($this, 'imageFile');
+        }
         return parent::beforeValidate();
     }
 
@@ -147,37 +149,41 @@ class Post extends \yii\db\ActiveRecord
     public function getHtmlContent()
     {
         $htmlData = '';
-        $blocks = json_decode($this->text, true)['blocks'];
-        foreach ($blocks as $block) {
-            switch ($block['type']) {
-                case 'paragraph':
-                    $htmlData .= "<p>{$block['data']['text']}</p>";
-                    break;
-                case 'header':
-                    $htmlData .= "<h{$block['data']['level']}>{$block['data']['text']}</h{$block['data']['level']}>";
-                    break;
-                case 'list':
-                    $htmlData .= $block['data']['style'] == 'ordered' ? '<ol>' : '<ul>';
-                    foreach ($block['data']['items'] as $item) {
-                        $htmlData .= "<li>{$item}</li>";
-                    }
-                    $htmlData .= $block['data']['style'] == 'ordered' ? '</ol>' : '</ul>';
-                    break;
-                case 'table':
-                    $htmlData .= '<table>';
-                    foreach ($block['data']['content'] as $row) {
-                        $htmlData .= '<tr>';
-                        foreach ($row as $rowItem) {
-                            $htmlData .= "<td>{$rowItem}</td>";
+        if (json_decode($this->text) != null) {
+            $blocks = json_decode($this->text, true)['blocks'];
+            foreach ($blocks as $block) {
+                switch ($block['type']) {
+                    case 'paragraph':
+                        $htmlData .= "<p>{$block['data']['text']}</p>";
+                        break;
+                    case 'header':
+                        $htmlData .= "<h{$block['data']['level']}>{$block['data']['text']}</h{$block['data']['level']}>";
+                        break;
+                    case 'list':
+                        $htmlData .= $block['data']['style'] == 'ordered' ? '<ol>' : '<ul>';
+                        foreach ($block['data']['items'] as $item) {
+                            $htmlData .= "<li>{$item}</li>";
                         }
-                        $htmlData .= '</tr>';
-                    }
-                    $htmlData .= '</table>';
-                    break;
-                case 'quote':
-                    $htmlData .= "<blockquote cite={$block['data']['caption']}>{$block['data']['text']}</blockquote>";
-                    break;
+                        $htmlData .= $block['data']['style'] == 'ordered' ? '</ol>' : '</ul>';
+                        break;
+                    case 'table':
+                        $htmlData .= '<table>';
+                        foreach ($block['data']['content'] as $row) {
+                            $htmlData .= '<tr>';
+                            foreach ($row as $rowItem) {
+                                $htmlData .= "<td>{$rowItem}</td>";
+                            }
+                            $htmlData .= '</tr>';
+                        }
+                        $htmlData .= '</table>';
+                        break;
+                    case 'quote':
+                        $htmlData .= "<blockquote cite={$block['data']['caption']}>{$block['data']['text']}</blockquote>";
+                        break;
+                }
             }
+        } else {
+            $htmlData = "<p>{$this->text}</p>";
         }
         return $htmlData;
     }
@@ -188,7 +194,9 @@ class Post extends \yii\db\ActiveRecord
             'id',
             'title',
             'text' => 'htmlContent',
-            'user_id'
+            'image',
+            'user_id',
+            'category_name' => fn () => $this->postCategory->name
         ];
     }
 }

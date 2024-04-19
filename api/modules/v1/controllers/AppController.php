@@ -19,8 +19,8 @@ use yii\filters\auth\HttpBearerAuth;
 use app\behaviors\ReturnStatusBehavior;
 
 /**
- * @method returnSuccess
- * @method returnError
+ * @method returnSuccess($data, $header = 'data', $links = null)
+ * @method returnError($error = null, $error_description = null, $statusCode = 500)
  */
 class AppController extends ActiveController
 {

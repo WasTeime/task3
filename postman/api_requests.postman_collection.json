@@ -1,0 +1,230 @@
+{
+	"info": {
+		"_postman_id": "71f98413-6310-49b8-8d14-51fa6d70e1d4",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34398735"
+	},
+	"item": [
+		{
+			"name": "http://task3/api/v1/post?id=80",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "70ZDW0GWJEViqKDU5jwrkSDNHNvwg5gS",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "80",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://task3/api/v1/post?id=80",
+					"protocol": "http",
+					"host": [
+						"task3"
+					],
+					"path": [
+						"api",
+						"v1",
+						"post"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "80"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://task3/api/v1/post/update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "70ZDW0GWJEViqKDU5jwrkSDNHNvwg5gS",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "75",
+							"type": "text"
+						},
+						{
+							"key": "category_id",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "adsasadfdsf",
+							"type": "text"
+						},
+						{
+							"key": "text",
+							"value": "dfwfegfdsgdfsgdfgs",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://task3/api/v1/post/update",
+					"protocol": "http",
+					"host": [
+						"task3"
+					],
+					"path": [
+						"api",
+						"v1",
+						"post",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://task3/api/v1/post",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "70ZDW0GWJEViqKDU5jwrkSDNHNvwg5gS",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "category_id",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "new",
+							"type": "text"
+						},
+						{
+							"key": "text",
+							"value": "fdsfajkdlsjfklads;f",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://task3/api/v1/post",
+					"protocol": "http",
+					"host": [
+						"task3"
+					],
+					"path": [
+						"api",
+						"v1",
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://task3/api/v1/post",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "70ZDW0GWJEViqKDU5jwrkSDNHNvwg5gS",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "category_id",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "ashdkfh",
+							"type": "text"
+						},
+						{
+							"key": "text",
+							"value": "dsakfhdsahfjkdhsfkjh",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/OSPanel/domains/task3/2af53d8f1be483dd0e05b7b18142c33c.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://task3/api/v1/post",
+					"protocol": "http",
+					"host": [
+						"task3"
+					],
+					"path": [
+						"api",
+						"v1",
+						"post"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

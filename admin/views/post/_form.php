@@ -31,7 +31,7 @@ use common\models\PostCategory;
     ?>
 
     <?php
-        echo $form->field($model, 'image')->fileInput();
+        echo $form->field($model, 'imageFile')->fileInput();
         if (isset($model->image)) {
             echo Html::img('/uploads/'."{$model->image}");
         }

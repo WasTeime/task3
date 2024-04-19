@@ -32,9 +32,9 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'language' => 'ru-RU',
-    'controllerNamespace' => 'app\controllers',
+    'controllerNamespace' => 'api\controllers',
     'aliases' => [
-        '@images' => '/uploads/global/',
+        '@images' => '/uploads/',
     ],
 //    'defaultRoute' => 'site/index',
     'modules' => [
