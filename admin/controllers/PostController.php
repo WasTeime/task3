@@ -32,17 +32,6 @@ class PostController extends AdminController
         );
     }
 
-    public function actions()
-    {
-        return [
-            'upload-file' => [
-                'class' => UploadImageAction::class,
-                'mode' => UploadImageAction::MODE_FILE,
-                'path' => \Yii::getAlias('@uploads'),
-            ]
-        ];
-    }
-
     /**
      * Lists all Post models.
      *
@@ -81,13 +70,8 @@ class PostController extends AdminController
     {
         $model = new Post();
 
-        if ($this->request->isPost) {
-            if ($model->save()) {
-                print_r('save');
-            }
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
+        if ($model->load($this->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             $model->loadDefaultValues();
         }
@@ -126,7 +110,11 @@ class PostController extends AdminController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if (isset($model->image)) {
+            unlink(\Yii::getAlias('@uploads')."/{$model->image}");
+        }
+        $model->delete();
 
         return $this->redirect(['index']);
     }

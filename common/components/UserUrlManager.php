@@ -20,7 +20,7 @@ use yii\web\{NotFoundHttpException, UrlManager, UrlNormalizerRedirectException, 
 class UserUrlManager extends UrlManager
 {
 
-    public const UPLOADS = '/uploads/global';
+    public const UPLOADS = '/uploads';
     public const USER_UPLOADS = '/users';
 
     public string $root = '/htdocs';

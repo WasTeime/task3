@@ -38,16 +38,6 @@ class PostStatus
         return -1;
     }
 
-    //если статус и код не существует в массиве, тогда возвращаем true и добавляем статус, если существует возвращаем false
-    public function addStatus(string $name, int $statusCode)
-    {
-        if (!in_array($name, $this->statuses) && !array_key_exists($statusCode, $this->statuses)) {
-            $this->statuses[$statusCode] = $name;
-            return true;
-        }
-        return false;
-    }
-
     //список статусов только с названиями на русском
     private function getStatusesTranslate()
     {

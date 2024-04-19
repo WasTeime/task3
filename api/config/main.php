@@ -17,7 +17,7 @@ $params = array_merge(
     require __DIR__ . '/params-local.php'
 );
 
-Utils::$ROOT_DOMAIN = $params['rootDomain'];
+Utils::$ROOT_DOMAIN = $params['rootDomain'] ?? '';
 $current_url = (new Request)->absoluteUrl;
 $htdocs_pos = strpos($current_url, '/htdocs');
 if (!$htdocs_pos) {

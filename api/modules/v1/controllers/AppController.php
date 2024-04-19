@@ -18,6 +18,10 @@ use yii\filters\ContentNegotiator;
 use yii\filters\auth\HttpBearerAuth;
 use app\behaviors\ReturnStatusBehavior;
 
+/**
+ * @method returnSuccess
+ * @method returnError
+ */
 class AppController extends ActiveController
 {
     public $errors;
@@ -66,6 +70,7 @@ class AppController extends ActiveController
         $imgPath = Url::base(true);
         $pos = stripos($imgPath, '/api');
         $imgPath = substr($imgPath,0,$pos);
+        $this->returnSuccess();
         return $imgPath;
     }
 

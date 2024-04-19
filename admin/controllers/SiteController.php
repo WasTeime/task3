@@ -7,6 +7,7 @@ use Yii;
 use yii\filters\{AccessControl, VerbFilter};
 use yii\web\{Controller, ErrorAction, Response};
 use yii\captcha\CaptchaAction;
+use zakurdaev\editorjs\actions\UploadImageAction;
 
 /**
  * Site controller
@@ -57,6 +58,22 @@ class SiteController extends Controller
                 'class' => CaptchaAction::class,
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
+            'upload-file' => [
+                'class' => UploadImageAction::class,
+                'mode' => UploadImageAction::MODE_FILE,
+                'url' => '/uploads',
+                'path' => '@uploads',
+                'validatorOptions' => [
+                    'maxWidth' => 19200,
+                    'maxHeight' => 10800
+                ]
+            ],
+            'fetch-url' => [
+                'class' => UploadImageAction::class,
+                'mode' => UploadImageAction::MODE_URL,
+                'url' => '/uploads',
+                'path' => '@uploads',
+            ]
         ];
     }
 

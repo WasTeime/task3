@@ -152,8 +152,8 @@ return [
             'decimalSeparator' => ',',
             'thousandSeparator' => ' ',
             'currencyCode' => 'RUB',
-            'dateFormat' => 'php: d/m/Y',
-            'datetimeFormat' => 'php: d/m/Y H:i',
+            'dateFormat' => 'php: d.m.Y',
+            'datetimeFormat' => 'php: d.m.Y H:i',
         ],
 
         'urlManager' => [

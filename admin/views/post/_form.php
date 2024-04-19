@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use zakurdaev\editorjs\EditorJsWidget;
 use admin\components\PostStatus;
@@ -29,11 +30,19 @@ use common\models\PostCategory;
         echo $form->field($model, 'status')->dropDownList($status->getStatuses(true));
     ?>
 
+    <?php
+        echo $form->field($model, 'image')->fileInput();
+        if (isset($model->image)) {
+            echo Html::img('/uploads/'."{$model->image}");
+        }
+    ?>
+
     <?= $form->field($model, 'text')->widget(EditorJsWidget::class, [
         'selectorForm' => $form->id,
         'endpoints' => [
-                'uploadImageByFile' => \yii\helpers\Url::to(Yii::getAlias('@admin').'/post/upload-file')
-        ]
+            'uploadImageByFile' => Url::to(['/site/upload-file']),
+            'uploadImageByUrl' => Url::to(['/site/fetch-url']),
+        ],
     ]) ?>
 
     <div class="form-group mt-4">

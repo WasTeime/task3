@@ -7,6 +7,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use admin\components\StatusBehavior;
 use yii\helpers\ArrayHelper;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "{{%post}}".
@@ -27,6 +28,8 @@ use yii\helpers\ArrayHelper;
  */
 class Post extends \yii\db\ActiveRecord
 {
+    /** @var UploadedFile|string */
+    public $imageFile;
     public function behaviors()
     {
         return ArrayHelper::merge(parent::behaviors(), [
@@ -51,9 +54,9 @@ class Post extends \yii\db\ActiveRecord
         return [
             [['user_id', 'post_category_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['title', 'text'], 'required'],
-            [['text', 'image'], 'string'],
+            [['text'], 'string'],
             [['title'], 'string', 'max' => 255],
-
+            [['image'], 'file', 'extensions' => 'png, jpg'],
             [['post_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => PostCategory::class, 'targetAttribute' => ['post_category_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -71,7 +74,7 @@ class Post extends \yii\db\ActiveRecord
             'text' => 'Контент',
             'post_category_id' => 'Категория',
             'status' => 'Статус',
-            'image' => 'Image',
+            'image' => 'Картинка',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -79,14 +82,39 @@ class Post extends \yii\db\ActiveRecord
 
     public function beforeValidate(): bool
     {
-        // $this->imageFile = UploadedFile::getInstance($this, 'imageFile');
+        $this->imageFile = UploadedFile::getInstance($this, 'image');
         return parent::beforeValidate();
+    }
+
+    //сохраняет картинку и возвращает название картинки
+    private function saveImage(UploadedFile $image) : string
+    {
+        $imgName = uniqid().".{$this->imageFile->extension}";
+        $path = Yii::getAlias('@uploads')."/$imgName";
+        $this->imageFile->saveAs($path);
+        return $imgName;
+    }
+
+    //возвращает новое имя и удаляет старую картинку
+    private function replaceImage(string $oldImgName, UploadedFile $newImg) : string
+    {
+        $path = Yii::getAlias('@uploads')."/$oldImgName";
+        if (file_exists($path) && !is_dir($path)) {
+            unlink($path);
+        }
+        return $this->saveImage($newImg);
     }
 
     public function beforeSave($insert): bool
     {
         // Сохранение файла
-        $this->image = '/uploads';
+        if (isset($this->imageFile)) {
+            if ($insert) {
+                $this->image = $this->saveImage($this->imageFile);
+            } else {
+                $this->image = $this->replaceImage($this->oldAttributes['image'], $this->imageFile);
+            }
+        }
         return parent::beforeSave($insert);
     }
 
